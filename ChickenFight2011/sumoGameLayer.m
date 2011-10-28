@@ -463,24 +463,25 @@ int blowTime=10;
 }
 
 
-- (void)levelTimerCallback:(NSTimer *)timer 
-{ 
+- (void) levelTimerCallback:(NSTimer *)timer { 
     
-    if(blowTime > 0){
+    if (blowTime) {
+        
         [recorder updateMeters]; 
-        const double ALPHA = 0.05; 
-        double peakPowerForChannel = pow(10, (0.05 * [recorder peakPowerForChannel:0])); 
-        lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * lowPassResults;
-        highValue = round(lowPassResults*100+1);
-        NSLog(@"highVolue = %d ", highValue);
-        //NSLog(@"Average input: %f Peak input: %f Low pass results: %f", [recorder averagePowerForChannel:0], [recorder 	peakPowerForChannel:0], lowPassResults); 
-        // NSLog(@"Mic blow detected, your volue is %d", highVolue);
-        if( highValue > 40 && lowPassResults < 100){
+        const double_t kFilterValue = 0.75; 
+        double_t peakPowerForChannel = [recorder peakPowerForChannel:0]; 
+        
+        lowPassResults = kFilterValue * peakPowerForChannel + (1.0 - kFilterValue) * lowPassResults;
+        highValue = 5 * lowPassResults + 10;
+
+        NSLog(@"initial peak %f, high value %d, low pass results %f", peakPowerForChannel, highValue, lowPassResults);
+        
+        if (lowPassResults > -1) {
             blowTime--;
             NSLog(@"blowTime = %d", blowTime);
         }
-    }
-    else {
+        
+    } else {
         
         [timer invalidate];
         timer = nil;
