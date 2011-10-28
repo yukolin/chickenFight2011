@@ -8,6 +8,7 @@
 
 #import "StartGameScene.h"
 #import "ChooseRole.h"
+#import "inputChickenNameLayer.h"
 
 @implementation StartGameScene
 
@@ -76,6 +77,7 @@
 -(void)ccTouchesEnded:(NSSet *)touche withEvent:(UIEvent *)event
 {
     [[CCDirector sharedDirector]replaceScene: [ChooseRole scene]];
+    //[[CCDirector sharedDirector]replaceScene:[inputChickenNameLayer chickenNameScene]];
 }
 
 

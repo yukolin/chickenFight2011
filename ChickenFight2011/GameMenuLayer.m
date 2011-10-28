@@ -10,6 +10,7 @@
 #import "GameMenuLayer.h"
 
 #import "startBlackWhiteGameLayer.h"
+#import "sumoGameLayer.h"
 #import "AtHomeScene.h"
 
 @implementation GameMenuLayer
@@ -45,6 +46,7 @@
         CCMenuItem *tutuItem = [CCMenuItemImage itemFromNormalSprite:tutuImage selectedSprite:nil target:self selector:@selector(linkToTutuGamePage)];
         CCMenuItem *returnItem = [CCMenuItemImage itemFromNormalImage:@"returnButton.png" selectedImage:nil target:self selector:@selector(BackToHome:)];
         blackWhiteItem.tag = 5;
+        sumoItem.tag = 8;
         
         blackWhiteItem.position=ccp(size.width/4, size.height/3*2);
         sumoItem.position=ccp(size.width/4*3, size.height/3*2);
@@ -103,7 +105,20 @@
 
 -(void)linkToSumoGamePage:(id)sender
 {
+    size = [self getMyWinSize];
+    CCMenuItem* item = (CCMenuItem*)sender;
+    if (item.tag == 8)
+    {
+        [item runAction:[CCSequence actions:[CCMoveTo actionWithDuration:0.1 position:CGPointMake(size.width/4*3 - 10 , size.height/3*2)],[CCMoveTo actionWithDuration:0.1 position:CGPointMake(size.width/4*3 + 10 , size.height/3*2)],
+                         [CCMoveTo actionWithDuration:0.1 position:CGPointMake(size.width/4*3, size.height/3*2)],[CCCallFunc actionWithTarget:self selector:@selector(gotoSumoGameScene)],
+                         nil]];
+    }
 
+}
+
+-(void)gotoSumoGameScene
+{
+    [[CCDirector sharedDirector] replaceScene:[sumoGameLayer scene]];
 }
 
 -(void)linkToTutuGamePage

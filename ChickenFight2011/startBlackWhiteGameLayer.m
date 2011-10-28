@@ -540,7 +540,6 @@
     [myDialog runAction:[CCSequence actions:
                          [CCDelayTime actionWithDuration:3.0f],
                          [CCJumpTo actionWithDuration:0.5f position:CGPointMake(win_size.width * 0.55, win_size.height * 0.4) height:win_size.height * 0.3 jumps:1], nil]]; 
-    //[showDialogNode addChild:blackWhiteDialog];
     return showDialogNode;
     
 }
@@ -567,7 +566,6 @@
     
     if (pitch >= 60) //上
     {
-        //[motionManager stopDeviceMotionUpdates];
         [self upItemTouched];
     }
     else if (pitch <= -30) //下

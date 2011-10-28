@@ -11,6 +11,7 @@
 #import "ChooseRole.h"
 #import "GetNewEgg.h"
 #import "AtHomeScene.h"
+#import "inputChickenNameLayer.h"
 
 
 
@@ -237,7 +238,8 @@
 
 -(void)GotoBreakEgg
 {
-    [[CCDirector sharedDirector] replaceScene:[GetNewEgg scene]];
+    //[[CCDirector sharedDirector] replaceScene:[GetNewEgg scene]];
+    [[CCDirector sharedDirector] replaceScene:[inputChickenNameLayer chickenNameScene]];
 }
 
 - (void) realloc
