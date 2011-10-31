@@ -9,6 +9,11 @@
 #import "sumoGameLayer.h"
 #import "SimpleAudioEngine.h"
 
+
+@interface sumoGameLayer () <AVAudioRecorderDelegate>
+@end
+
+
 @implementation sumoGameLayer
 
 int blowTime=10;
@@ -171,12 +176,7 @@ int blowTime=10;
 }
 
 
--(void)winOrLose:(int)sender{
-    
-    //    CCNode *testNode = [self gotest];
-    //    
-    //    [self addChild:testNode z:1];
-    //    testNode.visible=NO;
+- (void) winOrLose:(int)sender {
     
     CCAnimation *chickenAnim = [CCAnimation animation];
     [chickenAnim addFrameWithFilename:@"sumo_com_ready.png"];   
@@ -184,73 +184,49 @@ int blowTime=10;
     
     id chickenAnimationAction = [CCAnimate actionWithDuration:1.0f animation:chickenAnim restoreOriginalFrame:YES];
     
+    NSInteger sumoRandon = (arc4random() %100) + 1;
     
-    //亂數
-    NSInteger sumoRandon;
-    NSInteger r1 = arc4random()%100 +1;
-    NSInteger r2 = arc4random()%100 +1;
-    sumoRandon = (r1+r2)%100 + 1;
-    //NSLog(@"sumoRandon = %d", sumoRandon); 
+    distancePointer += (highValue-sumoRandon);
     
-    distancePointer+=(highValue-sumoRandon);
-    
-    //voice line red(user)
     [self removeChild:voiceLine_r cleanup:YES];
-    
     voiceLine_r=[CCSprite spriteWithFile:@"voice_line_r.png" rect:CGRectMake(0, 2, 64, 251*highValue/100)];
-    voiceLine_r.anchorPoint=ccp(0,0);
+    voiceLine_r.anchorPoint=CGPointZero;
     voiceLine_r.position=CGPointMake(screenSize.width*0.85, screenSize.height*0.035+3);
     voiceLine_r.scale=0.5;
     [self addChild:voiceLine_r];
     
-    //voice line red(com)
     [self removeChild:voiceLine_com_r cleanup:YES];
-    
     voiceLine_com_r=[CCSprite spriteWithFile:@"voice_line_r.png" rect:CGRectMake(0, 2, 64, 251*sumoRandon/100)];
-    voiceLine_com_r.anchorPoint=ccp(0,0);
+    voiceLine_com_r.anchorPoint=CGPointZero;
     voiceLine_com_r.position=CGPointMake(screenSize.width*0.05, screenSize.height*0.7+3);
     voiceLine_com_r.scale=0.5;
     [self addChild:voiceLine_com_r];
     
-    NSLog(@"dis= %d",distancePointer);
-    
-    if (distancePointer<100.0) {
-        //recorder.meteringEnabled = NO;
-        NSLog(@"pushChinken %f %f", sumo_com_push.position.x, sumo_com_push.position.y);
+    if (distancePointer < 100.0) {
         
+        sumo_com_ready.visible = NO;
+        sumo_com_push.visible = NO;
+        sumo_user_ready2.visible = NO;
+        sumo_user_push.visible = YES;
+        animatingChicken.visible = YES;
+
+        CGFloat defaultComLocX = screenSize.width * 0.52;
+        CGFloat defaultComLocY = screenSize.height * 0.55;
+        CGFloat defaultUserLocX = screenSize.width / 3;
+        CGFloat defaultUserLocY = screenSize.height * 0.5;
         
-        //顯示分數
-        //    [score1 setString:[NSString stringWithFormat:@"分數: %d", sumoRandon]];
-        //    [score2 setString:[NSString stringWithFormat:@"分數: %d", highVolue]];
-        //    [dis setString:[NSString stringWithFormat:@"%d",distancePointer ]];
+        sumo_com_push.position = (CGPoint) {
+            defaultComLocX + (distancePointer * 74 / 100),
+            defaultComLocY + (distancePointer * 124 / 100)
+        };
         
-        sumo_com_ready.visible=NO;
-        sumo_com_push.visible=NO;
-        sumo_user_ready2.visible=NO;
-        sumo_user_push.visible=YES;
-        
-        animatingChicken.visible=YES;
-        //testNode.visible=YES;
-        
-        //雞位置
-        int defaultComLocX=screenSize.width*0.52;
-        int defaultComLocY=screenSize.height*0.55;
-        int defaultUserLocX=screenSize.width/3;
-        int defaultUserLocY=screenSize.height*0.5;
-        
-        //size
-        
-        
-        NSLog(@"score=%d , score2=%d", sumoRandon, highValue);
-        NSLog(@"dis=%d", distancePointer);
-        
-        sumo_com_push.position=CGPointMake(defaultComLocX+(distancePointer*74/100), defaultComLocY+(distancePointer*124/100));
         [animatingChicken runAction:chickenAnimationAction];
-        animatingChicken.position=sumo_com_push.position;
+        animatingChicken.position = sumo_com_push.position;
         
-        
-        sumo_user_push.position=CGPointMake(defaultUserLocX+(distancePointer*74/100), defaultUserLocY+(distancePointer*124/100));
-        
+        sumo_user_push.position = (CGPoint) {
+            defaultUserLocX + (distancePointer * 74 / 100),
+            defaultUserLocY + (distancePointer * 124 / 100)
+        };
         
         animatingChicken.scale=0.88-(distancePointer*0.38/100);
         sumo_user_push.scale=0.9-(distancePointer*0.25/100);
@@ -258,40 +234,26 @@ int blowTime=10;
         
     }
     
-    //    if(distancePointer>=100)
-    //    {
-    //        sumo_com_push.position=CGPointMake(screenSize.width*0.52+(distancePointer*74/100), screenSize.height*0.55+(distancePointer*124/100));
-    //        [animatingChicken runAction:chickenAnimationAction];
-    //        animatingChicken.position=sumo_com_push.position;
-    //    
-    //        sumo_user_push.position=CGPointMake(screenSize.width/3+(distancePointer*74/100), screenSize.height*0.5+(distancePointer*124/100));
-    //  
-    //        animatingChicken.scale=0.88-(distancePointer*0.38/100);
-    //        sumo_user_push.scale=0.9-(distancePointer*0.25/100);
-    //    }
-    
-    //比較輸贏
-    //贏
-    
-    //記錄輸贏局數
-    save_ChickenData* myData = [[save_ChickenData alloc] init];
-    NSString* chickenNumber =  [myData GetMychickenNumber]; 
-    NSInteger totalWin, totalLose;
+    save_ChickenData *myData = [[[save_ChickenData alloc] init] autorelease];
+    NSString *chickenNumber = [myData GetMychickenNumber];
+    NSInteger totalWin = 0, totalLose = 0;
     switch ([chickenNumber integerValue]) {
-        case 1:
+        case 1: {
             totalWin = [myData GetMyChickenSumoTotalWin1];
             totalLose = [myData GetMyChickenSumoTotalLose1];
             break;
-        case 2:
+        }
+        case 2: {
             totalWin = [myData GetMyChickenSumoTotalWin2];
             totalLose = [myData GetMyChickenSumoTotalLose2];
             break;
-        case 3:
+        }
+        case 3: {
             totalWin = [myData GetMyChickenSumoTotalWin3];
             totalLose = [myData GetMyChickenSumoTotalLose3];
             break;
+        }
     }
-
     
     if(distancePointer>=100){
         
@@ -365,6 +327,7 @@ int blowTime=10;
         playAgainMenu.visible=YES;
         
     }
+    
     switch ([chickenNumber integerValue]) {
         case 1:
             [myData SaveMyChickenSumoTotalWin1:totalWin];
@@ -484,41 +447,62 @@ int blowTime=10;
 
 
 //吹氣
--(void)blowStart
-{
+- (void) blowStart {
+
     blowTime = 10;
-    recorder.meteringEnabled = NO;
-    //highVolue =0;
-    NSURL *url = [NSURL fileURLWithPath:@"/dev/null"];
-    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithFloat:44100.0], AVSampleRateKey, [NSNumber numberWithInt: kAudioFormatAppleLossless], AVFormatIDKey, [NSNumber numberWithInt:1], AVNumberOfChannelsKey, [NSNumber numberWithInt:1], AVNumberOfChannelsKey, [NSNumber numberWithInt: AVAudioQualityMax], AVEncoderAudioQualityKey, nil];
     
-    NSError *error;
+    if (recorder)
+        return;
+    
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-recording", NSStringFromClass([self class])]];
+    
+    NSURL *url = [NSURL fileURLWithPath:path];  //  was @"/dev/null"
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
+        [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+        [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
+        [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
+        [NSNumber numberWithInt:AVAudioQualityLow], AVEncoderAudioQualityKey,
+    nil];
+    NSError *error = nil;
+    
     recorder = [[AVAudioRecorder alloc] initWithURL:url settings:settings error:&error];
-    if(recorder){
-        [recorder prepareToRecord];
-        recorder.meteringEnabled = YES;
-        [recorder record];
-        levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(levelTimerCallback:) userInfo:nil repeats:YES];
-    }else
-        NSLog(@"Error: %@",[error description]); 
     
+    if (!recorder)
+        NSLog(@"Error: %@", error);
+        
+    [recorder setDelegate:self];
     
+    BOOL didPrepareToRecord = [recorder prepareToRecord];
+    NSParameterAssert(didPrepareToRecord);
+    
+    [recorder setMeteringEnabled:YES];
+    
+    BOOL didRecord = [recorder record];
+    NSParameterAssert(didRecord);
+    
+    levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.35 target:self selector:@selector(levelTimerCallback:) userInfo:nil repeats:YES];
+            
 }
 
 
 - (void) levelTimerCallback:(NSTimer *)timer { 
     
-    if (blowTime) {
+    if (blowTime > 0) {
         
-        [recorder updateMeters]; 
-        const double_t kFilterValue = 0.75; 
+        [recorder updateMeters];
+        const double_t kFilterValue = 0.75;
         double_t peakPowerForChannel = [recorder peakPowerForChannel:0]; 
         
         lowPassResults = kFilterValue * peakPowerForChannel + ((double_t)1.0 - kFilterValue) * lowPassResults;
         double_t temp = 5 * lowPassResults + 10;
         highValue = (NSInteger)temp;
 
-        NSLog(@"initial peak %f, high value %d, low pass results %f", peakPowerForChannel, highValue, lowPassResults);
+        NSLog(@"initial peak %f, high value %d, low pass results %f",
+            peakPowerForChannel,
+            highValue,
+            lowPassResults
+        );
         
         if (lowPassResults > -1) {
             blowTime--;
@@ -531,6 +515,8 @@ int blowTime=10;
         timer = nil;
         [recorder stop];
         recorder.meteringEnabled = NO;
+        
+        NSLog(@"triggering winOrLose with value %d", highValue);
         
         //[self unscheduleUpdate];
         [self winOrLose:highValue];
@@ -581,24 +567,49 @@ int blowTime=10;
                            nil]];
     
     return myCountdownNode;
+
 }
 
-// on "dealloc" you need to release all your retained objects
-//- (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder; 
-//{}
-- (void) dealloc
-{
-	// in case you have something to dealloc, do it in this method
-	// in this particular example nothing needs to be released.
-	// cocos2d will automatically release all the children (Label)
-	
-	// don't forget to call "super dealloc"
-	[super dealloc];
+- (void) dealloc {
+
     [sumo_com_push release];
     [sumo_com_ready release];
     [sumo_user_ready release];
     [recorder release];
     [levelTimer release];
+
+    [super dealloc];
+
+}
+
+- (void) audioRecorderDidFinishRecording:(AVAudioRecorder *)aRecorder successfully:(BOOL)flag {
+
+    NSLog(@"%s %@ %x", __PRETTY_FUNCTION__, aRecorder, flag);
+
+}
+
+- (void) audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)aRecorder error:(NSError *)error {
+
+    NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, aRecorder, error);
+
+}
+
+- (void) audioRecorderBeginInterruption:(AVAudioRecorder *)aRecorder {
+
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, aRecorder);
+    
+}
+
+- (void) audioRecorderEndInterruption:(AVAudioRecorder *)aRecorder withFlags:(NSUInteger)flags {
+
+    NSLog(@"%s %@ %x", __PRETTY_FUNCTION__, aRecorder, flags);
+
+}
+
+- (void)audioRecorderEndInterruption:(AVAudioRecorder *) aRecorder {
+
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, aRecorder);
+
 }
 
 @end
