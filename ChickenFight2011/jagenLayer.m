@@ -7,7 +7,7 @@
 //
 
 #import "jagenLayer.h"
-
+#import "SimpleAudioEngine.h"
 
 
 @implementation jagenLayer
@@ -62,38 +62,37 @@
     CCNode *myCountdownNode = [CCNode node];
    
     CCSprite * countdown3 = [CCSprite spriteWithFile:@"countdown3.png"];
-        countdown3.scale = 0.5;
+        countdown3.scale = 0.8;
     
     [myCountdownNode addChild:countdown3 z:0 tag:0];
-    
-    [countdown3 runAction:[CCSequence actions:[CCScaleTo actionWithDuration:0.5 scale:1.5],
-                                        [CCFadeOut actionWithDuration:0.5],
+    [countdown3 runAction:[CCSequence actions:[CCScaleTo actionWithDuration:0.45 scale:1.1],
+                                        [CCFadeOut actionWithDuration:0.05],
                                         [CCHide action],
                                         nil]];
     //[myCountdownNode removeChildByTag:0 cleanup:YES];
     CCSprite * countdown1 = [CCSprite spriteWithFile:@"countdown1.png"];
     CCSprite * countdown2 = [CCSprite spriteWithFile:@"countdown2.png"];
-    countdown1.scale = 0.5;
-    countdown2.scale = 0.5;
+    countdown1.scale = 0.8;
+    countdown2.scale = 0.8;
 
     [myCountdownNode addChild:countdown2 z:1 tag:1];
     
     [countdown2 runAction:[CCSequence actions:
                            [CCHide action],
-                                        [CCDelayTime actionWithDuration:1.0],
+                                        [CCDelayTime actionWithDuration:0.5],
                             [CCShow action],
-                                        [CCScaleTo actionWithDuration:0.5 scale:1.5],
-                                        [CCFadeOut actionWithDuration:0.5],
+                                        [CCScaleTo actionWithDuration:0.45 scale:1.1],
+                                        [CCFadeOut actionWithDuration:0.05],
                                         nil]];
 //    //[myCountdownNode removeChildByTag:0 cleanup:YES];
     [myCountdownNode addChild:countdown1 z:1 tag:1];
     
     [countdown1 runAction:[CCSequence actions:
                            [CCHide action],
-                           [CCDelayTime actionWithDuration:2.0],
+                           [CCDelayTime actionWithDuration:1.0],
                            [CCShow action],
-                           [CCScaleTo actionWithDuration:0.5 scale:1.5],
-                                        [CCFadeOut actionWithDuration:0.5],
+                           //[CCScaleTo actionWithDuration:0.35 scale:1.1],
+                                        [CCFadeOut actionWithDuration:0.10],
                                         nil]];
     
     return myCountdownNode;

@@ -34,7 +34,7 @@
 {
     if((self=[super init]))
     {
-        CCLOG(@"%@:%@",NSStringFromSelector(_cmd),self);
+        //CCLOG(@"%@:%@",NSStringFromSelector(_cmd),self);
          [[SimpleAudioEngine sharedEngine] stopBackgroundMusic];//stop 
         //self.isAccelerometerEnabled = YES;
         self.isTouchEnabled=YES;

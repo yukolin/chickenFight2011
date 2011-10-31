@@ -15,6 +15,7 @@
 #import "jagenLayer.h"
 #import "AtHomeScene.h"
 #import "blackWhiteGameEndLayer.h"
+#import "SimpleAudioEngine.h"
 
 
 @implementation startBlackWhiteGameLayer
@@ -54,6 +55,7 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
+        //[SimpleAudioEngine sharedEngine].mute = YES;
         
         size = [self getMyWinSize];
         CCNode *comNode = [myChickens com_node];
@@ -121,13 +123,14 @@
     save_ChickenData *getMyChickenNameClass = [[save_ChickenData alloc]init];
     
     NSString* chickenName = [getMyChickenNameClass GetMyChickenName:[[getMyChickenNameClass GetMychickenNumber] integerValue]];
-    
-    NSLog(@"myChickenName = %@", chickenName);
+   
     CCLabelTTF *showUserName = [CCLabelTTF labelWithString:chickenName fontName:FONT_NAME fontSize:40];
     //showUserName.color = ccWHITE;
+    if ([self getChildByTag:14] != nil) {
+        [self removeChildByTag:14 cleanup:YES];
+    }
+
     [self addChild:showUserName z:14 tag:14];
-    NSLog(@"showmyname : %@", chickenName);
-    
     showUserName.position = CGPointMake(size.width * 0.3, size.height * 0.1);    
 }
 
@@ -179,11 +182,11 @@
     [self showUserName];
     
     //[self runAction:[CCDelayTime actionWithDuration:2.0f]];
-    
+    coundDownSoundId = (NSNumber*)[[SimpleAudioEngine sharedEngine] playEffect:@"chicken2.m4a"];
     CCNode * myCountdown = [jagenLayer countdown];
     [self addChild:myCountdown z:9 tag:9];
     myCountdown.position = CGPointMake(size.width /2, size.height / 2);
-    [self runAction:[CCDelayTime actionWithDuration:5.0f]];
+    //[self runAction:[CCDelayTime actionWithDuration:5.0f]];
     
     //跳出剪刀石頭布對話框
     
@@ -192,7 +195,7 @@
     //jagenDialog.position = CGPointMake(size.width * 0.55, size.height * 0.3);  
     jagenDialog.position = CGPointMake(size.width * 0.55, -size.height * 0.5);
     [jagenDialog runAction:[CCSequence actions:
-                          [CCDelayTime actionWithDuration:3.0f],
+                          [CCDelayTime actionWithDuration:0.9f],
                           [CCJumpTo actionWithDuration:0.5f position:CGPointMake(size.width * 0.55, size.height * 0.4) height:size.height * 0.3 jumps:1], nil]];    
     
     CCMenuItem *scissorsItem = [CCMenuItemImage itemFromNormalSprite:[jagenLayer ItemsForJaGen:1] selectedSprite:nil target:self selector:@selector(scissorsItemTouched)];
@@ -206,7 +209,7 @@
     //jagenMenu.position = CGPointZero;
     jagenMenu.position = CGPointMake(0, -size.height * 0.5);
     [jagenMenu runAction:[CCSequence actions:
-                          [CCDelayTime actionWithDuration:3.5f],
+                          [CCDelayTime actionWithDuration:0.9f],
                           [CCJumpTo actionWithDuration:0.5f position:CGPointMake(0, size.height * 0.1) height:size.height * 0.5 jumps:1], nil]];
     
     
@@ -405,6 +408,7 @@
 
 -(void)scissorsItemTouched
 {
+    [[SimpleAudioEngine sharedEngine] stopEffect:(ALuint)coundDownSoundId];
     CCMenu * menu = (CCMenu *)[self getChildByTag:4];
     menu.isTouchEnabled = NO;
     
@@ -419,6 +423,7 @@
 
 -(void)rockItemTouched
 {
+     [[SimpleAudioEngine sharedEngine] stopEffect:(ALuint)coundDownSoundId];
     CCMenu * menu = (CCMenu *)[self getChildByTag:4];
     menu.isTouchEnabled = NO;
     
@@ -434,6 +439,7 @@
 
 -(void)paperItemTouched
 {
+     [[SimpleAudioEngine sharedEngine] stopEffect:(ALuint)coundDownSoundId];
     CCMenu * menu = (CCMenu *)[self getChildByTag:4];
     menu.isTouchEnabled = NO;
     
@@ -483,25 +489,25 @@
     [self addChild:user_chicken z:2 tag:2];
     
     [copy_chicken runAction:[CCSequence actions:
-                             [CCDelayTime actionWithDuration:3.0f],
-                             [CCMoveTo actionWithDuration:0.05f position:CGPointMake([self getMyWinSize].width * 0.70, [self getMyWinSize].height * 0.65)],
+                             [CCDelayTime actionWithDuration:1.0f],
+                             [CCMoveTo actionWithDuration:0.05f position:CGPointMake([self getMyWinSize].width * 0.7, [self getMyWinSize].height * 0.65)],
                              [CCMoveTo actionWithDuration:0.05f position:CGPointMake([self getMyWinSize].width * 0.62, [self getMyWinSize].height * 0.65)],
                              [CCMoveTo actionWithDuration:0.05f position:CGPointMake([self getMyWinSize].width * 0.6, [self getMyWinSize].height * 0.65)],
                              nil]];
     [user_chicken runAction:[CCSequence actions:
-                             [CCDelayTime actionWithDuration:3.0f],
+                             [CCDelayTime actionWithDuration:1.0f],
                              [CCMoveTo actionWithDuration:0.05f position:CGPointMake([self getMyWinSize].width * 0.32, [self getMyWinSize].height * 0.3)],
                              [CCMoveTo actionWithDuration:0.05f position:CGPointMake([self getMyWinSize].width * 0.28, [self getMyWinSize].height * 0.3)],
                              [CCMoveTo actionWithDuration:0.05f position:CGPointMake([self getMyWinSize].width * 0.30, [self getMyWinSize].height * 0.3)],
                              nil]];
     [self showUserName];
     //[self runAction:[CCDelayTime actionWithDuration:2.0f]];
-    
+    coundDownSoundId = (NSNumber*)[[SimpleAudioEngine sharedEngine] playEffect:@"chicken-chicken5.m4a"];
     CCNode * myCountdown = [jagenLayer countdown];
     [self addChild:myCountdown z:9 tag:9];
     myCountdown.position = CGPointMake([self getMyWinSize].width /2, [self getMyWinSize].height / 2);
         
-    [self runAction:[CCDelayTime actionWithDuration:5.0f]];
+    //[self runAction:[CCDelayTime actionWithDuration:5.0f]];
     
     //跳出上下左右對話框
     CCNode* showmyDialog = [self showMyDialog:[self getMyWinSize]];
@@ -523,7 +529,7 @@
     //jagenMenu.position = CGPointZero;
     updownleftrightMenu.position = CGPointMake(0, -[self getMyWinSize].height * 0.7);
     [updownleftrightMenu runAction:[CCSequence actions:
-                                    [CCDelayTime actionWithDuration:3.5f],
+                                    [CCDelayTime actionWithDuration:1.0f],
                                     [CCJumpTo actionWithDuration:0.5f position:CGPointMake(0, [self getMyWinSize].height * 0.1) height:[self getMyWinSize].height * 0.5 jumps:1],
                                     [CCCallFunc actionWithTarget:self selector:@selector(RunMontion)],
                                     nil]];
@@ -538,7 +544,7 @@
     
     myDialog.position = CGPointMake(win_size.width * 0.55, (0-win_size.height) * 0.5);
     [myDialog runAction:[CCSequence actions:
-                         [CCDelayTime actionWithDuration:3.0f],
+                         [CCDelayTime actionWithDuration:1.0f],
                          [CCJumpTo actionWithDuration:0.5f position:CGPointMake(win_size.width * 0.55, win_size.height * 0.4) height:win_size.height * 0.3 jumps:1], nil]]; 
     return showDialogNode;
     
@@ -650,12 +656,14 @@
 } 
 -(void)upItemTouched
 {
-    [self CheckNewRound:1];    
+        [self CheckNewRound:1];    
     NSLog(@"up");
 }
 
 -(void)CheckNewRound:(NSInteger)way
 {
+    [[SimpleAudioEngine sharedEngine] stopEffect:(ALuint)coundDownSoundId];
+
     self.isTouchEnabled = NO;
     [self unscheduleUpdate];
 self.motionManager = [[CMMotionManager alloc] init];
@@ -703,20 +711,53 @@ self.motionManager = [[CMMotionManager alloc] init];
     [self addChild:myComRole z:1 tag:1];
     
     if (comAnswer == way) {
+        NSString* chickenNumber =  [getFirst GetMychickenNumber]; 
+        NSInteger totalWin, totalLose;
+        switch ([chickenNumber integerValue]) {
+            case 1:
+                totalWin = [getFirst GetMyChickenBlackWhiteTotalWin1];
+                totalLose = [getFirst GetMyChickenBlackWhiteTotalLose1];
+                break;
+            case 2:
+                totalWin = [getFirst GetMyChickenBlackWhiteTotalWin2];
+                totalLose = [getFirst GetMyChickenBlackWhiteTotalLose2];
+                break;
+            case 3:
+                totalWin = [getFirst GetMyChickenBlackWhiteTotalWin3];
+                totalLose = [getFirst GetMyChickenBlackWhiteTotalLose3];
+                break;
+        }
         CCNode* winLoseNode;
         if (first == @"1") {
             winLoseNode = [self showWhoisFirst:@"You Win"];
             NSInteger myWin = [getFirst GetBlackWhiteWinNumber] + 1;
             [getFirst SetBlackWhiteWinNumber:myWin];
+            totalWin += 1;
             //totalwin = [[myWinLose objectAtIndex:0] integerValue] + 1;
         }
         else{  
             winLoseNode = [self showWhoisFirst:@"You Lose"];
             NSInteger myLose = [getFirst GetBlackWhiteLoseNumber] + 1;
             [getFirst SetBlackWhiteLoseNumber:myLose];
-
+            totalLose += 1;
             //totallose = [[myWinLose objectAtIndex:1] integerValue] + 1;
         }
+        switch ([chickenNumber integerValue]) {
+            case 1:
+                [getFirst SaveMyChickenBlackWhiteTotalWin1:totalWin];
+                [getFirst SaveMyChickenBlackWhiteTotalLose1:totalLose];
+                 break;
+            case 2:
+                [getFirst SaveMyChickenBlackWhiteTotalWin2:totalWin];
+                [getFirst SaveMyChickenBlackWhiteTotalLose2:totalLose];
+                break;
+            case 3:
+                [getFirst SaveMyChickenBlackWhiteTotalWin3:totalWin];
+                [getFirst SaveMyChickenBlackWhiteTotalLose3:totalLose];
+                break;
+        }
+
+        
         [self addChild:winLoseNode z:14 tag:14];
         
         NSLog(@"myWin = %d", [getFirst GetBlackWhiteWinNumber]);
@@ -726,16 +767,12 @@ self.motionManager = [[CMMotionManager alloc] init];
             [self removeChildByTag:20 cleanup:YES];
         }
         NSInteger com_win;
-//        if ([getFirst GetRoundNumber] == 1)
-//            com_win = 0;
-//        else
-            com_win = [getFirst GetRoundNumber] - [getFirst GetBlackWhiteWinNumber];
+        
+        com_win = [getFirst GetRoundNumber] - [getFirst GetBlackWhiteWinNumber];
             
-        
-        
-        CCLabelTTF* mywinLable = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d:%d",[getFirst GetBlackWhiteWinNumber], com_win] fontName:FONT_NAME fontSize:20];
+        CCLabelTTF* mywinLable = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d:%d",[getFirst GetBlackWhiteWinNumber], com_win] fontName:FONT_NAME fontSize:30];
         [self addChild:mywinLable z:20 tag:20];
-        mywinLable.position = CGPointMake([self getMyWinSize].width / 2, [self getMyWinSize].height * 0.9);
+        mywinLable.position = CGPointMake([self getMyWinSize].width * 0.9, [self getMyWinSize].height * 0.95);
 
         
         save_ChickenData* saveClass =[[save_ChickenData alloc] init];

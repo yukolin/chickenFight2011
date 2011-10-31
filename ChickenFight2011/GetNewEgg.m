@@ -26,7 +26,7 @@ int ei =0;
 {
     if((self=[super init]))
     {
-        self.isTouchEnabled=YES;
+        //self.isTouchEnabled=YES;
         self.isAccelerometerEnabled = YES;
         
         bg=[CCSprite spriteWithFile:@"eggsBg.png"];
@@ -223,6 +223,7 @@ int ei =0;
 
 -(void)pageMove
 {
+    [self unscheduleUpdate];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionJumpZoom transitionWithDuration:0.5 scene:[inputChickenNameLayer chickenNameScene]]]; 
 }
 

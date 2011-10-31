@@ -121,7 +121,7 @@
     [userReadyNode addChild:userReadyImage];
     userReadyImage.position = CGPointMake(0, 0);
     [userReadyNode runAction:[CCSequence actions:
-    				 [CCDelayTime actionWithDuration:3.0f],
+    				 [CCDelayTime actionWithDuration:1.2f],
                               [CCMoveTo actionWithDuration:0.05f position:CGPointMake(size.width * 0.32, size.height * 0.1)],
                               [CCMoveTo actionWithDuration:0.05f position:CGPointMake(size.width * 0.28, size.height * 0.1)],
                               [CCMoveTo actionWithDuration:0.05f position:CGPointMake(size.width * 0.3, size.height * 0.1)],
@@ -137,8 +137,8 @@
     [comReadyNode addChild:comReadyImage];
     comReadyImage.position = CGPointMake(0, 0);
     [comReadyNode runAction:[CCSequence actions:
-                              [CCDelayTime actionWithDuration:3.0f],
-                              [CCMoveTo actionWithDuration:0.05f position:CGPointMake(size.width * 0.58, size.height * 0.65)],
+                              [CCDelayTime actionWithDuration:1.2f],
+                              [CCMoveTo actionWithDuration:0.05f position:CGPointMake(size.width * 0.7, size.height * 0.65)],
                               [CCMoveTo actionWithDuration:0.05f position:CGPointMake(size.width * 0.62, size.height * 0.65)],
                               [CCMoveTo actionWithDuration:0.05f position:CGPointMake(size.width * 0.6, size.height * 0.65)],
                               nil]];

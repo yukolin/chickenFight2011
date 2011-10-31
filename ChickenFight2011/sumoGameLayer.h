@@ -11,14 +11,15 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
+#import "save_ChickenData.h"
 
 @interface sumoGameLayer : CCLayer {
     
     CGSize screenSize;
     AVAudioRecorder *recorder;
     NSTimer *levelTimer;
-    double lowPassResults;
-    int highValue;
+    double_t lowPassResults;
+    NSInteger highValue;
     UILabel *level;
     CCSprite *bg;
     CCSprite *sumo_com_push;
@@ -52,6 +53,6 @@
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
 -(void) winOrLose:(int)sender;
-
+-(CCNode *)countdown;
 
 @end

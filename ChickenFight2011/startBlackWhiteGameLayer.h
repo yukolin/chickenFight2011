@@ -18,7 +18,7 @@
     CMMotionManager *motionManager;       
     CCSprite *copy_chicken;
     CCSprite *user_chicken;
-
+    NSNumber *coundDownSoundId;
 }
 @property (nonatomic, retain) CMMotionManager *motionManager;
 

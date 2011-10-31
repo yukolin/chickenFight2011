@@ -13,7 +13,7 @@
 
     CCSprite *bg;
     CCSprite *title;
-    
+    NSNumber *soundId;
 }
 
 +(CCScene *) scene;

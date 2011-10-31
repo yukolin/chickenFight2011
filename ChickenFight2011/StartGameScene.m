@@ -9,6 +9,7 @@
 #import "StartGameScene.h"
 #import "ChooseRole.h"
 #import "inputChickenNameLayer.h"
+#import "SimpleAudioEngine.h"
 
 @implementation StartGameScene
 
@@ -24,7 +25,9 @@
 {
     if((self=[super init]))
     {        
-        CCLOG(@"%@:%@",NSStringFromSelector(_cmd),self);
+        //CCLOG(@"%@:%@",NSStringFromSelector(_cmd),self);
+        soundId = (NSNumber*)[[SimpleAudioEngine sharedEngine] playEffect:@"chicken5.m4a"];//play a sound
+
         //self.isAccelerometerEnabled = YES;
         self.isTouchEnabled=YES;
         
@@ -76,6 +79,7 @@
 
 -(void)ccTouchesEnded:(NSSet *)touche withEvent:(UIEvent *)event
 {
+    [[SimpleAudioEngine sharedEngine] stopEffect:(ALuint)soundId];
     [[CCDirector sharedDirector]replaceScene: [ChooseRole scene]];
     //[[CCDirector sharedDirector]replaceScene:[inputChickenNameLayer chickenNameScene]];
 }

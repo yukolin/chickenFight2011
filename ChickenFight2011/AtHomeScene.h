@@ -29,6 +29,6 @@
 
 +( CGPoint ) locationFromTouch:( UITouch *)touch;
 +(CCScene *) scene;
-
+-(CCNode *)getChickenBlackWhiteRecord;
 
 @end

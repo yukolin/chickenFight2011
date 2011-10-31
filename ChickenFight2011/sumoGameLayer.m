@@ -12,6 +12,7 @@
 @implementation sumoGameLayer
 
 int blowTime=10;
+@class save_ChickenData;
 
 +(CCScene *) scene
 {
@@ -127,6 +128,10 @@ int blowTime=10;
     timeTest=[CCLabelTTF labelWithString:@" " fontName:@"Marker Felt" fontSize:160];
     timeTest.position=CGPointMake(screenSize.width/2, screenSize.height/2);
     [self addChild:timeTest z:7];
+    
+    CCNode* myCountDown = [self countdown];
+    [self addChild:myCountDown z:8 tag:8];
+    myCountDown.position = CGPointMake(screenSize.width/2, screenSize.height/2);
     
     //gameResult
     gameResult=[CCLabelTTF labelWithString:@" " fontName:@"Marker Felt" fontSize:60];
@@ -267,6 +272,27 @@ int blowTime=10;
     
     //比較輸贏
     //贏
+    
+    //記錄輸贏局數
+    save_ChickenData* myData = [[save_ChickenData alloc] init];
+    NSString* chickenNumber =  [myData GetMychickenNumber]; 
+    NSInteger totalWin, totalLose;
+    switch ([chickenNumber integerValue]) {
+        case 1:
+            totalWin = [myData GetMyChickenSumoTotalWin1];
+            totalLose = [myData GetMyChickenSumoTotalLose1];
+            break;
+        case 2:
+            totalWin = [myData GetMyChickenSumoTotalWin2];
+            totalLose = [myData GetMyChickenSumoTotalLose2];
+            break;
+        case 3:
+            totalWin = [myData GetMyChickenSumoTotalWin3];
+            totalLose = [myData GetMyChickenSumoTotalLose3];
+            break;
+    }
+
+    
     if(distancePointer>=100){
         
         id comFly = [CCSpawn actions:[CCMoveTo actionWithDuration:2 position:ccp(screenSize.width-5, screenSize.height)], [CCScaleTo actionWithDuration:2 scale:0],
@@ -290,7 +316,7 @@ int blowTime=10;
         
         
         //敵方飛走
-        
+        totalWin += 1;
         [gameResult setString: @"YOU WIN!"];
         gameResult.color=ccRED;
         gameResult.position=CGPointMake(screenSize.width/2, screenSize.height/2);
@@ -322,7 +348,7 @@ int blowTime=10;
         
         NSLog(@"輸");
         
-        
+        totalLose += 1;
         [gameResult setString: @"YOU LOSE!"];
         gameResult.color=ccBLUE;
         gameResult.position=CGPointMake(screenSize.width/2, screenSize.height/2);
@@ -339,6 +365,22 @@ int blowTime=10;
         playAgainMenu.visible=YES;
         
     }
+    switch ([chickenNumber integerValue]) {
+        case 1:
+            [myData SaveMyChickenSumoTotalWin1:totalWin];
+            [myData SaveMyChickenSumoTotalLose1:totalLose];
+            break;
+        case 2:
+            [myData SaveMyChickenSumoTotalWin2:totalWin];
+            [myData SaveMyChickenSumoTotalLose2:totalLose];
+            break;
+        case 3:
+            [myData SaveMyChickenSumoTotalWin3:totalWin];
+            [myData SaveMyChickenSumoTotalLose3:totalLose];
+            break;
+    }
+
+    
 }
 
 -(void)update:(ccTime)dt
@@ -353,11 +395,12 @@ int blowTime=10;
 {
     
     //倒數
-    [timeTest setString:[NSString stringWithFormat:@"%d",3-i ]];
+    //[timeTest setString:[NSString stringWithFormat:@"%d",3-i ]];
     ++i;
     switch (i) {
         case 1://3
-            [[SimpleAudioEngine sharedEngine] playEffect:@"three.amr"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"three.m4a"];
+            
             sumo_user_ready.visible=YES;
             sumo_user_ready2.visible=NO;
             sumo_user_push.visible=NO;
@@ -367,7 +410,7 @@ int blowTime=10;
             [sumo_user_ready runAction:moveUp];
             break;
         case 2://2
-            [[SimpleAudioEngine sharedEngine] playEffect:@"two.amr"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"two.m4a"];
             sumo_user_ready.visible=NO;
             sumo_user_ready2.visible=YES;
             sumo_user_push.visible=NO;
@@ -377,7 +420,7 @@ int blowTime=10;
             
             break;
         case 3://1
-            [[SimpleAudioEngine sharedEngine] playEffect:@"one.amr"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"one.m4a"];
             sumo_user_ready.visible=NO;
             sumo_user_ready2.visible=YES;
             sumo_user_push.visible=NO;
@@ -388,7 +431,7 @@ int blowTime=10;
             
             break;
         case 4://GO
-            [[SimpleAudioEngine sharedEngine] playEffect:@"go.amr"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"go.m4a"];
             [timeTest setString:@"GO!"];
             timeTest.color=ccRED;
             CCScaleTo *up=[CCScaleTo actionWithDuration:0.5 scale:3];
@@ -471,8 +514,9 @@ int blowTime=10;
         const double_t kFilterValue = 0.75; 
         double_t peakPowerForChannel = [recorder peakPowerForChannel:0]; 
         
-        lowPassResults = kFilterValue * peakPowerForChannel + (1.0 - kFilterValue) * lowPassResults;
-        highValue = 5 * lowPassResults + 10;
+        lowPassResults = kFilterValue * peakPowerForChannel + ((double_t)1.0 - kFilterValue) * lowPassResults;
+        double_t temp = 5 * lowPassResults + 10;
+        highValue = (NSInteger)temp;
 
         NSLog(@"initial peak %f, high value %d, low pass results %f", peakPowerForChannel, highValue, lowPassResults);
         
@@ -492,6 +536,51 @@ int blowTime=10;
         [self winOrLose:highValue];
         
     }
+}
+
+-(CCNode *)countdown
+{
+    CCNode *myCountdownNode = [CCNode node];
+    
+    CCSprite * countdown3 = [CCSprite spriteWithFile:@"countdown3.png"];
+    countdown3.scale = 0.7;
+    
+    [myCountdownNode addChild:countdown3 z:0 tag:0];
+    [countdown3 runAction:[CCSequence actions:
+                           [CCHide action],
+                           [CCDelayTime actionWithDuration:1.0],
+                           [CCShow action],
+                           [CCScaleTo actionWithDuration:1.0 scale:1.5],
+                           [CCFadeOut actionWithDuration:0.05],
+                           [CCHide action],
+                           nil]];
+    //[myCountdownNode removeChildByTag:0 cleanup:YES];
+    CCSprite * countdown1 = [CCSprite spriteWithFile:@"countdown1.png"];
+    CCSprite * countdown2 = [CCSprite spriteWithFile:@"countdown2.png"];
+    countdown1.scale = 0.7;
+    countdown2.scale = 0.7;
+    
+    [myCountdownNode addChild:countdown2 z:1 tag:1];
+    
+    [countdown2 runAction:[CCSequence actions:
+                           [CCHide action],
+                           [CCDelayTime actionWithDuration:2.0],
+                           [CCShow action],
+                           [CCScaleTo actionWithDuration:1.0 scale:1.5],
+                           [CCFadeOut actionWithDuration:0.05],
+                           nil]];
+    //    //[myCountdownNode removeChildByTag:0 cleanup:YES];
+    [myCountdownNode addChild:countdown1 z:1 tag:1];
+    
+    [countdown1 runAction:[CCSequence actions:
+                           [CCHide action],
+                           [CCDelayTime actionWithDuration:3.0],
+                           [CCShow action],
+                           [CCScaleTo actionWithDuration:1.0 scale:1.5],
+                           [CCFadeOut actionWithDuration:0.05],
+                           nil]];
+    
+    return myCountdownNode;
 }
 
 // on "dealloc" you need to release all your retained objects

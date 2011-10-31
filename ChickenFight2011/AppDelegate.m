@@ -82,7 +82,7 @@
     
     [inputTextField setDelegate:self];
 
-    [[SimpleAudioEngine sharedEngine] playEffect:@"chicken5.m4a"];//play a sound
+    //[[SimpleAudioEngine sharedEngine] playEffect:@"chicken5.m4a"];//play a sound
 	// Run the intro Scene
 	[[CCDirector sharedDirector] runWithScene: [StartGameScene scene]];
 }
