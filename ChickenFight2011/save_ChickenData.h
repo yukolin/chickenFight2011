@@ -61,5 +61,9 @@
 -(void)SaveMyChickenSumoTotalLose3:(NSInteger)lose;
 -(NSInteger)GetMyChickenSumoTotalLose3;
 
+-(void)SetMusicIsMute:(BOOL)isMute;
+-(BOOL)GetMusicIsMute;
+-(void)SetSoundIsMute:(BOOL)isMute;
+-(BOOL)GetSoundIsMute;
 
 @end

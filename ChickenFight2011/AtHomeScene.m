@@ -14,6 +14,7 @@
 
 @implementation AtHomeScene
 
+@class save_ChickenData;
 #define FONT_NAME @"Marker Felt"
 
 +(CCScene *) scene;
@@ -22,7 +23,6 @@
     AtHomeScene *layer=[AtHomeScene node];
     [scene addChild:layer];
     return scene;
-    
 }
 
 -(id)init
@@ -31,6 +31,10 @@
     {
         //CCLOG(@"%@:%@",NSStringFromSelector(_cmd),self);
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"home.m4a"];
+        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.5f];
+        save_ChickenData* getData = [[save_ChickenData alloc] init];
+        if ([getData GetMusicIsMute])
+            [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.0f];
         CGSize screenSize=[CCDirector sharedDirector].winSize;
         
         //背景
@@ -170,8 +174,33 @@
     CCLabelTTF* music = [CCLabelTTF labelWithString:@"Music" fontName:FONT_NAME fontSize:30];
     sound.position = CGPointMake(size.width * 0.3, size.height * 0.75);
     music.position = CGPointMake(size.width * 0.3, size.height * 0.65);
-    CCMenuItem* soundOnOff =[CCMenuItemFont itemFromString:@"On" target:self selector:@selector(setSoundOnOff)];
-    CCMenuItem* musicOnOff = [CCMenuItemFont itemFromString:@"Off" target:self selector:@selector(setMusicOnOff)];
+    
+    NSString* soundMute;
+    NSString* musicMute;
+    save_ChickenData* getData = [[save_ChickenData alloc] init];
+    if ([getData GetSoundIsMute])
+    {
+        soundMute = @"Off";
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+    }
+    else{
+        soundMute = @"On";
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:1.0f];
+        }
+    if ([getData GetMusicIsMute])
+    {
+        musicMute = @"Off";
+        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.0f];
+    }
+    else{
+        musicMute = @"On";
+        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.6f];
+    }
+    
+    CCMenuItem* soundOnOff =[CCMenuItemFont itemFromString:soundMute target:self selector:@selector(setSoundOnOff:)];
+    CCMenuItem* musicOnOff = [CCMenuItemFont itemFromString:musicMute target:self selector:@selector(setMusicOnOff:)];
+    soundOnOff.tag = 11;
+    musicOnOff.tag = 12;
     soundOnOff.position = CGPointMake(size.width * 0.6, size.height * 0.75);
     musicOnOff.position = CGPointMake(size.width * 0.6, size.height * 0.65);
     CCMenu* menu = [CCMenu menuWithItems:soundOnOff, musicOnOff, nil];
@@ -181,19 +210,53 @@
     [self addChild:menu z:10 tag:10];
 }
 
--(void)setSoundOnOff
+-(void)setSoundOnOff:(id)sender
 {
     if ([self getChildByTag:6] != NULL)
         [self removeChildByTag:6 cleanup:YES];
     if ([self getChildByTag:7] != NULL)
         [self removeChildByTag:7 cleanup:YES];
+    save_ChickenData* getData = [[save_ChickenData alloc] init];
+    if ([getData GetSoundIsMute]) {
+        [getData SetSoundIsMute:NO];
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:1.0f];
+        CCMenuItemFont* item = (CCMenuItemFont*)sender;
+        if (item.tag == 11) {
+            [item setString:@"On"];
+        }
+    }else{
+        [getData SetSoundIsMute:YES];
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+        CCMenuItemFont* item = (CCMenuItemFont*)sender;
+        if (item.tag == 11) {
+            [item setString:@"Off"];
+        }
+    }
+
 }
--(void)setMusicOnOff
+-(void)setMusicOnOff:(id)sender
 {
     if ([self getChildByTag:6] != NULL)
         [self removeChildByTag:6 cleanup:YES];
     if ([self getChildByTag:7] != NULL)
         [self removeChildByTag:7 cleanup:YES];
+        save_ChickenData* getData = [[save_ChickenData alloc] init];
+    if ([getData GetMusicIsMute]) {
+        [getData SetMusicIsMute:NO];
+        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.6f];
+        CCMenuItemFont* item = (CCMenuItemFont*)sender;
+        if (item.tag == 12) {
+            [item setString:@"On"];
+        }
+    }else{
+        [getData SetMusicIsMute:YES];
+        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.0f];
+        CCMenuItemFont* item = (CCMenuItemFont*)sender;
+        if (item.tag == 12) {
+            [item setString:@"Off"];
+        }
+    }
+
 }
 
 -(CCNode *)getChickenBlackWhiteRecord

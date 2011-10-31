@@ -172,6 +172,10 @@
     if (CGRectContainsPoint(rectP1, location)) {
         [saveChickenNameClass MarkTheChickenNumber:@"1"];
         [[SimpleAudioEngine sharedEngine] playEffect:@"selChicken.m4a"]; 
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.1f];
+        if ([saveChickenNameClass GetSoundIsMute]) {
+            [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+        }
         if (playerName1 == @"") {                            
             myEgg = (CCNode *)[self getChildByTag:1];
             [myEgg runAction:[CCSequence actions:
@@ -190,6 +194,10 @@
    
     if (CGRectContainsPoint(rectP2, location)) {
         [[SimpleAudioEngine sharedEngine] playEffect:@"selChicken.m4a"]; 
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.1f];
+        if ([saveChickenNameClass GetSoundIsMute]) {
+            [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+        }
         [saveChickenNameClass MarkTheChickenNumber:@"2"];
         if (playerName2 == @"") {
             myEgg = (CCNode *)[self getChildByTag:2];
@@ -210,6 +218,10 @@
     
     if (CGRectContainsPoint(rectP3, location)) {
         [[SimpleAudioEngine sharedEngine] playEffect:@"selChicken.m4a"]; 
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.1f];
+        if ([saveChickenNameClass GetSoundIsMute]) {
+            [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+        }
         [saveChickenNameClass MarkTheChickenNumber:@"3"];
         if (playerName3 == @"") {
             myEgg = (CCNode *)[self getChildByTag:3];

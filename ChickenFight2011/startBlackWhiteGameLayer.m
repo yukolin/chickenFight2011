@@ -183,6 +183,10 @@
     
     //[self runAction:[CCDelayTime actionWithDuration:2.0f]];
     coundDownSoundId = (NSNumber*)[[SimpleAudioEngine sharedEngine] playEffect:@"chicken2.m4a"];
+    [[SimpleAudioEngine sharedEngine] setEffectsVolume:1.0f];
+    save_ChickenData* getData = [[save_ChickenData alloc] init];
+    if ([getData GetSoundIsMute])
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
     CCNode * myCountdown = [jagenLayer countdown];
     [self addChild:myCountdown z:9 tag:9];
     myCountdown.position = CGPointMake(size.width /2, size.height / 2);
@@ -503,6 +507,12 @@
     [self showUserName];
     //[self runAction:[CCDelayTime actionWithDuration:2.0f]];
     coundDownSoundId = (NSNumber*)[[SimpleAudioEngine sharedEngine] playEffect:@"chicken-chicken5.m4a"];
+    [[SimpleAudioEngine sharedEngine] setEffectsVolume:1.0f];
+    save_ChickenData* getData = [[save_ChickenData alloc] init];
+    if ([getData GetSoundIsMute])
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+        
+
     CCNode * myCountdown = [jagenLayer countdown];
     [self addChild:myCountdown z:9 tag:9];
     myCountdown.position = CGPointMake([self getMyWinSize].width /2, [self getMyWinSize].height / 2);

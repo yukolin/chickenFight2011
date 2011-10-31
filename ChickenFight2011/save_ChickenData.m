@@ -10,6 +10,30 @@
 
 @implementation save_ChickenData
 
+-(void)SetMusicIsMute:(BOOL)isMute
+{
+    NSString* const musicIsMute = @"IsMusicMute";
+    [[NSUserDefaults standardUserDefaults] setBool:isMute forKey:musicIsMute];
+}
+
+-(BOOL)GetMusicIsMute
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"IsMusicMute"];
+}
+
+-(void)SetSoundIsMute:(BOOL)isMute
+{
+    NSString* const soundIsMute = @"IsSoundMute";
+    [[NSUserDefaults standardUserDefaults] setBool:isMute forKey:soundIsMute];
+
+}
+
+-(BOOL)GetSoundIsMute
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSoundMute"];
+}
+
+
 -(BOOL)SaveMyChickenName1:(NSString *)chickenName
 {
     //key
