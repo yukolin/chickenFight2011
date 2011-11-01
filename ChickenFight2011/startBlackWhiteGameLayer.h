@@ -43,6 +43,7 @@
 -(void)rightItemTouched;
 -(void)CheckNewRound:(NSInteger)way;
 -(void)cleanDialogAndupdownItem;
--(void)rightnowCurrentAttitude;
+-(void)youFirstSound;
+-(void)otherFirstSound;
 
 @end

@@ -70,9 +70,9 @@
         returnItem.rotation = 81;
         returnItem.position = CGPointMake(screenSize.width * 0.13, screenSize.height * 0.92);
 
-        
-        tvChickenItem=[CCMenuItemImage itemFromNormalImage:@"watchTV.png" selectedImage:@"watchTV.png" target:self selector:@selector(chickenJump:)];
-        
+        CCSprite* watchTV = [CCSprite spriteWithFile:@"watchTV.png" rect:CGRectMake(screenSize.width /4, screenSize.height/6, screenSize.width, screenSize.height * 0.67)];
+        //tvChickenItem=[CCMenuItemImage itemFromNormalImage:@"watchTV.png" selectedImage:@"watchTV.png" target:self selector:@selector(chickenJump:)];
+        tvChickenItem = [CCMenuItemSprite itemFromNormalSprite:watchTV selectedSprite:nil target:self selector:@selector(chickenJump:)];
         wiiItem.position=CGPointMake(screenSize.width*0.9,screenSize.height*0.53);
         foodItem.position=CGPointMake(screenSize.width*0.2,screenSize.height*0.45);
         tvChickenItem.position=CGPointMake(screenSize.width*0.53, screenSize.height*0.17);

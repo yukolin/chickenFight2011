@@ -30,6 +30,7 @@
         //CCLOG(@"%@:%@",NSStringFromSelector(_cmd),self);
         
         soundId = (NSNumber*)[[SimpleAudioEngine sharedEngine] playEffect:@"chicken5.m4a"];//play a sound
+       
         save_ChickenData* getData = [[save_ChickenData alloc] init];
         if ([getData GetSoundIsMute])
             [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];

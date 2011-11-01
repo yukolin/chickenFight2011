@@ -256,7 +256,7 @@
             
     }
      [self unschedule:_cmd];
-   
+   [[SimpleAudioEngine sharedEngine] setEffectsVolume:1.5f];
     if (i==35) {
         [self timesUp];
         [self unschedule:_cmd]; 
@@ -318,6 +318,7 @@
         //distancePointer=1;
         totalWin += 1;
         [gameResult setString: @"YOU WIN!"];
+        [[SimpleAudioEngine sharedEngine] playEffect:@"youwin.m4a"];
         gameResult.color=ccRED;
 
         NSLog(@"贏");
@@ -332,6 +333,7 @@
         //distancePointer=1;
         totalLose += 1;
         [gameResult setString: @"YOU LOSE!"];
+        [[SimpleAudioEngine sharedEngine] playEffect:@"youlose.m4a"];
         gameResult.color=ccBLUE;
          NSLog(@"輸");
         

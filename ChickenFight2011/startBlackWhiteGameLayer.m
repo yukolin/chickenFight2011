@@ -136,16 +136,25 @@
         [self removeChildByTag:14 cleanup:YES];
         
     size = [self getMyWinSize];
+   
     CCNode *girlNode = [myChickens round_node:(NSInteger)data];
     girlNode.position = CGPointMake(size.width/2, size.height * 0.6);
     [self addChild:girlNode z:1 tag:1];
     
     [self runAction:[CCSequence actions:
-    				 [CCDelayTime actionWithDuration:2.0f],
+                    [CCDelayTime actionWithDuration:1.0f],
+                    [CCCallFuncND actionWithTarget:self selector:@selector(playRoundEffect:data:) data:(void*)data],
+    				 [CCDelayTime actionWithDuration:1.0f],
     				 [CCCallFunc actionWithTarget:self selector:@selector(gotoJaGenScene)],
     				 nil]];
 }
-
+-(void)playRoundEffect:(id)sender data:(NSInteger)data
+{
+     if (data == 1)
+        [[SimpleAudioEngine sharedEngine] playEffect:@"round1(cute).mp3" pitch:1.5f pan:1.0f gain:1.0f];
+    else
+        [[SimpleAudioEngine sharedEngine] playEffect:@"round2(cute).mp3" pitch:1.5f pan:1.0f gain:1.0f];   
+}
 
 -(void)gotoJaGenScene
 {
@@ -334,6 +343,7 @@
                 [save SetWhoIsFirst:first];
                 
                 CCNode * FirstNode = [self showWhoisFirst:@"You First"];
+                [self youFirstSound];
                 [self addChild:FirstNode z:13 tag:13];
                 [FirstNode runAction:[CCSequence actions:[CCShow action],
                                      [CCJumpTo actionWithDuration:0.5 position:FirstNode.position height:100 jumps:1],
@@ -348,6 +358,7 @@
                 [save SetWhoIsFirst:first];
                 
                 CCNode * otherFirstNode = [self showWhoisFirst:@"Other First"];
+                [self otherFirstSound];
                 [self addChild:otherFirstNode z:13 tag:13];
                 
                 [otherFirstNode runAction:[CCSequence actions:[CCShow action],
@@ -358,6 +369,16 @@
                                       ,nil]];            }
         }
 
+}
+
+-(void)youFirstSound
+{
+[[SimpleAudioEngine sharedEngine] playEffect:@"youFirst.mp3" pitch:1.5f pan:1.0f gain:1.0f];
+}
+
+-(void)otherFirstSound
+{
+[[SimpleAudioEngine sharedEngine] playEffect:@"otherFirst.mp3" pitch:1.5f pan:1.0f gain:1.0f];
 }
 
 -(void)playMyAgainEffect
@@ -823,6 +844,7 @@
         if (first == @"1") {
             first = @"2";
             whofirstNode = [self showWhoisFirst:@"Other First"];
+            
             [getFirst SetWhoIsFirst:@"2"];
         }else if (first == @"2"){
             first = @"1";
@@ -835,6 +857,7 @@
         [whofirstNode runAction:[CCSequence actions:[CCHide action],[CCDelayTime actionWithDuration:2],
                                   [CCCallFunc actionWithTarget:self selector:@selector(cleanDialogAndupdownItem)],
                                  [CCShow action],
+                                 [CCCallFuncND actionWithTarget:self selector:@selector(playWhoIsFirstSound:data:) data:(NSString*)first],
                                  [CCJumpTo actionWithDuration:0.5 position:whofirstNode.position height:100 jumps:1],
                                  [CCDelayTime actionWithDuration:1],[CCHide action],
                                  [CCCallFuncND actionWithTarget:self selector:@selector(gotoBlackWhite:data:)data:(NSString*)first]
@@ -843,6 +866,14 @@
     }
 
 }
+-(void)playWhoIsFirstSound:(id)sender data:(NSString*)first
+{
+    if (first == @"2")
+        [self otherFirstSound];
+    else
+        [self youFirstSound];
+}
+
 
 -(void)playMyEffect:(id)sender data:(NSString*)first
 {
@@ -850,7 +881,7 @@
     if (first == @"1")
         [[SimpleAudioEngine sharedEngine] playEffect:@"youwin.m4a"];
     else
-        [[SimpleAudioEngine sharedEngine] playEffect:@"youlose.m4a"];
+        [[SimpleAudioEngine sharedEngine] playEffect:@"youlose.m4a" pitch:1.1f pan:1.0f gain:1.0f];
     save_ChickenData* getData = [[save_ChickenData alloc] init];
     if ([getData GetSoundIsMute])
         [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];

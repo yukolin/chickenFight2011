@@ -172,7 +172,7 @@
     //roundGirl.position = CGPointMake(size.width/2, size.height/2);
     id stopGirl = [CCDelayTime actionWithDuration:0.5f];
     id jumpGirl = [CCJumpTo actionWithDuration:0.8 position:roundNode.position height:10 jumps:3];
-    id runGirl = [CCSpawn actions:[CCScaleTo actionWithDuration:0.8 scale:4], [CCMoveTo actionWithDuration:0.8 position:CGPointMake(size.width/2, 0)], nil];
+    id runGirl = [CCSpawn actions:[CCScaleTo actionWithDuration:0.8 scale:4], [CCMoveTo actionWithDuration:0.8 position:CGPointMake(size.width/2, -size.height * 0.5)], nil];
     //id speedGirl = [CCEaseIn actionWithAction:runGirl rate:2];
     id alphaGirl = [CCHide action];
 
