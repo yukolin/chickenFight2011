@@ -258,6 +258,7 @@
 		7C303083145FFED700614B12 /* button-22.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C303081145FFED700614B12 /* button-22.wav */; };
 		7C303084145FFED700614B12 /* chicken2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C303082145FFED700614B12 /* chicken2.wav */; };
 		7C3030861460059C00614B12 /* chickentalk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C3030851460059C00614B12 /* chickentalk.m4a */; };
+		7C3030A114600DAE00614B12 /* battle2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C3030A014600DAE00614B12 /* battle2.m4a */; };
 		7C33EF071457D3AF007ECBD5 /* GameMenuLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C33EF061457D3AF007ECBD5 /* GameMenuLayer.m */; };
 		7C33EF0A1457ED16007ECBD5 /* blackWhiteGameEndLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C33EF091457ED16007ECBD5 /* blackWhiteGameEndLayer.m */; };
 		7C465D0C145DC58C006764CB /* home.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C465D0A145DC58C006764CB /* home.m4a */; };
@@ -658,6 +659,7 @@
 		7C303081145FFED700614B12 /* button-22.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "button-22.wav"; sourceTree = "<group>"; };
 		7C303082145FFED700614B12 /* chicken2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chicken2.wav; sourceTree = "<group>"; };
 		7C3030851460059C00614B12 /* chickentalk.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = chickentalk.m4a; sourceTree = "<group>"; };
+		7C3030A014600DAE00614B12 /* battle2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = battle2.m4a; sourceTree = "<group>"; };
 		7C33EF051457D3AF007ECBD5 /* GameMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMenuLayer.h; sourceTree = "<group>"; };
 		7C33EF061457D3AF007ECBD5 /* GameMenuLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameMenuLayer.m; sourceTree = "<group>"; };
 		7C33EF081457ED16007ECBD5 /* blackWhiteGameEndLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blackWhiteGameEndLayer.h; sourceTree = "<group>"; };
@@ -1217,6 +1219,7 @@
 		7C2FDCC71457225000C012CE /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				7C3030A014600DAE00614B12 /* battle2.m4a */,
 				7C3030851460059C00614B12 /* chickentalk.m4a */,
 				7C303081145FFED700614B12 /* button-22.wav */,
 				7C303082145FFED700614B12 /* chicken2.wav */,
@@ -1445,6 +1448,7 @@
 				7C303083145FFED700614B12 /* button-22.wav in Resources */,
 				7C303084145FFED700614B12 /* chicken2.wav in Resources */,
 				7C3030861460059C00614B12 /* chickentalk.m4a in Resources */,
+				7C3030A114600DAE00614B12 /* battle2.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

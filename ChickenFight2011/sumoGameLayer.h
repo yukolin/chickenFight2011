@@ -34,6 +34,7 @@
     CCLabelTTF *score1;
     CCLabelTTF *score2;
     CCLabelTTF *timeTest;
+    CCLabelTTF *time30;
     CCLabelTTF *dis;
     CCLabelTTF *gameResult;
     CCBlink *gameResultBlink;
@@ -48,7 +49,9 @@
 -(void)initWithPlay;
 -(void)levelTimerCallback:(NSTimer *)timer;
 -(void)blowStart;
+-(void)timesUp;
 -(void)playSumoAgain:(id)sender;
+-(void)backToGameMenu:(id)sender;
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
