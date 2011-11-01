@@ -250,8 +250,8 @@
 
 -(void)GotoBreakEgg
 {
-    //[[CCDirector sharedDirector] replaceScene:[GetNewEgg scene]];
-    [[CCDirector sharedDirector] replaceScene:[inputChickenNameLayer chickenNameScene]];
+    [[CCDirector sharedDirector] replaceScene:[GetNewEgg scene]];
+    //[[CCDirector sharedDirector] replaceScene:[inputChickenNameLayer chickenNameScene]];
 }
 
 - (void) realloc

@@ -252,6 +252,12 @@
 		7C2FDCE01457410C00C012CE /* roundGirlLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C2FDCDD1457410B00C012CE /* roundGirlLayer.m */; };
 		7C2FDCE21457418E00C012CE /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C2FDCE11457418E00C012CE /* CoreMotion.framework */; };
 		7C2FDCE4145741B900C012CE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C2FDCE3145741B900C012CE /* CoreFoundation.framework */; };
+		7C30307D145FEAA200614B12 /* youwin.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C30307A145FEAA200614B12 /* youwin.m4a */; };
+		7C30307E145FEAA200614B12 /* youlose.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C30307B145FEAA200614B12 /* youlose.m4a */; };
+		7C30307F145FEAA200614B12 /* playagain.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C30307C145FEAA200614B12 /* playagain.m4a */; };
+		7C303083145FFED700614B12 /* button-22.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C303081145FFED700614B12 /* button-22.wav */; };
+		7C303084145FFED700614B12 /* chicken2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C303082145FFED700614B12 /* chicken2.wav */; };
+		7C3030861460059C00614B12 /* chickentalk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C3030851460059C00614B12 /* chickentalk.m4a */; };
 		7C33EF071457D3AF007ECBD5 /* GameMenuLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C33EF061457D3AF007ECBD5 /* GameMenuLayer.m */; };
 		7C33EF0A1457ED16007ECBD5 /* blackWhiteGameEndLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C33EF091457ED16007ECBD5 /* blackWhiteGameEndLayer.m */; };
 		7C465D0C145DC58C006764CB /* home.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C465D0A145DC58C006764CB /* home.m4a */; };
@@ -646,6 +652,12 @@
 		7C2FDCDE1457410B00C012CE /* roundGirlLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = roundGirlLayer.h; sourceTree = "<group>"; };
 		7C2FDCE11457418E00C012CE /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		7C2FDCE3145741B900C012CE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		7C30307A145FEAA200614B12 /* youwin.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = youwin.m4a; sourceTree = "<group>"; };
+		7C30307B145FEAA200614B12 /* youlose.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = youlose.m4a; sourceTree = "<group>"; };
+		7C30307C145FEAA200614B12 /* playagain.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = playagain.m4a; sourceTree = "<group>"; };
+		7C303081145FFED700614B12 /* button-22.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "button-22.wav"; sourceTree = "<group>"; };
+		7C303082145FFED700614B12 /* chicken2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chicken2.wav; sourceTree = "<group>"; };
+		7C3030851460059C00614B12 /* chickentalk.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = chickentalk.m4a; sourceTree = "<group>"; };
 		7C33EF051457D3AF007ECBD5 /* GameMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMenuLayer.h; sourceTree = "<group>"; };
 		7C33EF061457D3AF007ECBD5 /* GameMenuLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameMenuLayer.m; sourceTree = "<group>"; };
 		7C33EF081457ED16007ECBD5 /* blackWhiteGameEndLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blackWhiteGameEndLayer.h; sourceTree = "<group>"; };
@@ -1205,6 +1217,12 @@
 		7C2FDCC71457225000C012CE /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				7C3030851460059C00614B12 /* chickentalk.m4a */,
+				7C303081145FFED700614B12 /* button-22.wav */,
+				7C303082145FFED700614B12 /* chicken2.wav */,
+				7C30307A145FEAA200614B12 /* youwin.m4a */,
+				7C30307B145FEAA200614B12 /* youlose.m4a */,
+				7C30307C145FEAA200614B12 /* playagain.m4a */,
 				7C465D12145DE134006764CB /* three.m4a */,
 				7C465D13145DE134006764CB /* two.m4a */,
 				7C465D14145DE135006764CB /* one.m4a */,
@@ -1421,6 +1439,12 @@
 				7C465D1F145DEBE3006764CB /* tv_sumo@2x.png in Resources */,
 				7C465D20145DEBE3006764CB /* tv_blackWhite.png in Resources */,
 				7C465D21145DEBE3006764CB /* tv_blackWhite@2x.png in Resources */,
+				7C30307D145FEAA200614B12 /* youwin.m4a in Resources */,
+				7C30307E145FEAA200614B12 /* youlose.m4a in Resources */,
+				7C30307F145FEAA200614B12 /* playagain.m4a in Resources */,
+				7C303083145FFED700614B12 /* button-22.wav in Resources */,
+				7C303084145FFED700614B12 /* chicken2.wav in Resources */,
+				7C3030861460059C00614B12 /* chickentalk.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

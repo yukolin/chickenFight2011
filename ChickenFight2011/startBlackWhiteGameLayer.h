@@ -23,8 +23,6 @@
     float before_pitch;
     int i;
 }
-@property (nonatomic, readwrite) float nowYaw;
-@property (nonatomic, readwrite) float nowPitch;
 
 @property (nonatomic, retain) CMMotionManager *motionManager;
 

@@ -8,7 +8,7 @@
 
 #import "GetNewEgg.h"
 #import "inputChickenNameLayer.h"
-
+#import "SimpleAudioEngine.h"
 
 @implementation GetNewEgg
 
@@ -26,6 +26,7 @@ int ei =0;
 {
     if((self=[super init]))
     {
+        ei = 0;
         //self.isTouchEnabled=YES;
         self.isAccelerometerEnabled = YES;
         
@@ -152,7 +153,7 @@ int ei =0;
             //pos.x += eggX.x;
             //pos.y += eggX.y;
             egg.position = pos;
-            
+            //[[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
             NSLog(@"eggX.x=%f pos x =%f egg.position=%f %f", eggX.x, pos.x, egg.position.x, egg.position.y);
             NSLog(@"eggX.y=%f pos y =%f", eggX.y, pos.y);
             eggX = CGPointZero;
@@ -162,6 +163,7 @@ int ei =0;
             egg1.visible = YES;
             egg.visible = NO;
             pos = egg1.position; 
+            //[[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
             //pos.x += eggX.x;
             //pos.y += eggX.y;
             //egg1.position = pos;
@@ -173,6 +175,7 @@ int ei =0;
             egg2.visible = YES;
             egg1.visible = NO;
             pos = egg2.position; 
+            //[[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
             //pos.x += eggX.x;
             //pos.y += eggX.y;
             //egg2.position = pos;
@@ -184,6 +187,7 @@ int ei =0;
             egg3.visible = YES;
             egg2.visible = NO;
             pos = egg3.position; 
+            //[[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
             //pos.x += eggX.x;
             //pos.y += eggX.y;
             //egg3.position = pos;
@@ -198,6 +202,7 @@ int ei =0;
             //pos.x += eggX.x;
             //pos.y += eggX.y;
             //egg4.position = pos;
+            //[[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
             NSLog(@"egg4 %f", pos.x);
             NSLog(@"%f", pos.y);
             break;
@@ -209,10 +214,12 @@ int ei =0;
             //pos.x += eggX.x;
             //pos.y += eggX.y;
             //egg5.position = pos;
+            //[[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
             NSLog(@"egg5 %f", pos.x);
             NSLog(@"%f", pos.y);
             break;
         case 6:
+        //[[SimpleAudioEngine sharedEngine] playEffect:@"chicken2.wav"];
             [egg5 runAction:[CCSequence actions:[CCDelayTime actionWithDuration:3],
                              [CCCallFunc actionWithTarget:self selector:@selector(pageMove)],
                              nil]];
@@ -223,6 +230,7 @@ int ei =0;
 
 -(void)pageMove
 {
+   // [[SimpleAudioEngine sharedEngine] playEffect:@"chickentalk.m4a"];
     [self unscheduleUpdate];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionJumpZoom transitionWithDuration:0.5 scene:[inputChickenNameLayer chickenNameScene]]]; 
 }
@@ -236,16 +244,21 @@ int ei =0;
     double moiveD = sqrt(c);
     if (pos.x <= egg.contentSize.width/2+40 && moiveD >50.0f) {
         ei++;
+        [[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
     }
     else if (pos.x >= screenSize.width-egg.contentSize.width/2-30 && moiveD >50.0f) {
         ei++;
+        [[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
     }
     else if (pos.y <= egg.contentSize.height/2 && moiveD >50.0f) {
         ei++;
+        [[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
     }
     else if (pos.y >= screenSize.height-egg.contentSize.height/2-100 && moiveD >50.0f) {
         ei++;
+        [[SimpleAudioEngine sharedEngine] playEffect:@"button-22.wav"];
     }
+    [[SimpleAudioEngine sharedEngine] setEffectsVolume:2.0f];
     perpos = pos;
     
 }

@@ -24,29 +24,19 @@
 
 @synthesize motionManager;
 
-@synthesize nowYaw, nowPitch;
-
 @class save_ChickenData;
 
 +(id) Scene
 {
 	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
+	CCScene *scene = [CCScene node];	
 	// 'layer' is an autorelease object.
 	CCLayer *layer = [startBlackWhiteGameLayer node];
-    
-	
 	// add layer as a child to scene
 	[scene addChild: layer];
-    
-    
     CCSprite* blackWhiteBg = [CCSprite spriteWithFile:@"blackWhiteBg.png"];
     blackWhiteBg.anchorPoint = CGPointMake(0, 0);
     [layer addChild:blackWhiteBg z:0 tag:0];
-    
-	// return the scene
-    
 	return scene;
 }
 
@@ -105,7 +95,8 @@
     CCMenuItem* returnMenu = (CCMenuItem*)sender;
     if (returnMenu.tag == 18)
     {
-    [returnMenu runAction:[CCSequence actions:[CCMoveTo actionWithDuration:0.1 position:CGPointMake([self getMyWinSize].width * 0.13, [self getMyWinSize].height * 0.91)],
+    [returnMenu runAction:[CCSequence actions:
+    [CCMoveTo actionWithDuration:0.1 position:CGPointMake([self getMyWinSize].width * 0.13, [self getMyWinSize].height * 0.91)],
                           [CCMoveTo actionWithDuration:0.1 position:CGPointMake([self getMyWinSize].width * 0.13, [self getMyWinSize].height * 0.93)],
                            [CCMoveTo actionWithDuration:0.1 position:CGPointMake([self getMyWinSize].width * 0.13, [self getMyWinSize].height * 0.92)],
                            [CCCallFunc actionWithTarget:self selector:@selector(gotoAtHomeScene)],
@@ -141,9 +132,8 @@
     [self removeChildByTag:1 cleanup:YES];
     [self removeChildByTag:2 cleanup:YES];
     [self removeChildByTag:3 cleanup:YES];
-    if ([self getChildByTag:14] != nil) {
+    if ([self getChildByTag:14] != nil)
         [self removeChildByTag:14 cleanup:YES];
-    }
         
     size = [self getMyWinSize];
     CCNode *girlNode = [myChickens round_node:(NSInteger)data];
@@ -231,8 +221,6 @@
 
 -(void)WhoisWinner:(NSInteger)userJagenNumber
 {
-    
-
     size = [self getMyWinSize];
     CCNode * myDialog = [self getChildByTag:3];
     CCNode * myJagenMenu = [self getChildByTag:4];
@@ -283,7 +271,8 @@
                                   nil]];
     
     
-  }
+}
+
 
 -(void) ReJaGenScene:(id)sender data:(NSArray*) jagenArray
 {
@@ -291,10 +280,7 @@
     NSArray* myArray = (NSArray*)jagenArray;
     NSNumber* userJagen = [myArray objectAtIndex:0];
     NSNumber* comJagen = [myArray objectAtIndex:1];
-        
-    //NSInteger comJagen = [self comAnswer];
     
-
     if (comJagen == userJagen)
      {
          //[self removeChildByTag:12 cleanup:YES];
@@ -314,6 +300,7 @@
          CCNode * againNode = [self showWhoisFirst:@"Again"];
          [self addChild:againNode z:12 tag:12];
          [againNode runAction:[CCSequence actions:
+         [CCCallFunc actionWithTarget:self selector:@selector(playMyAgainEffect)],
                                [CCJumpTo actionWithDuration:0.5 position:againNode.position height:100 jumps:1],
                                [CCDelayTime actionWithDuration:1],[CCHide action],
                                [CCCallFunc actionWithTarget:self selector:@selector(gotoJaGenScene)],nil]];
@@ -369,11 +356,18 @@
                                       [CCHide action],
                                     [CCCallFuncND actionWithTarget:self selector:@selector(gotoBlackWhite:data:)data:(NSString*)first]
                                       ,nil]];            }
-            //[self addChild:firstLabel z:13 tag:13];
-            
-           
         }
 
+}
+
+-(void)playMyAgainEffect
+{
+    save_ChickenData* getData = [[save_ChickenData alloc] init];
+    [[SimpleAudioEngine sharedEngine] playEffect:@"playagain.m4a" pitch:1.3f pan:1.0f gain:1.0f];
+    if ([getData GetSoundIsMute])
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+    else
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:3.5f];
 }
 
 -(CCNode *)showWhoisFirst:(NSString *)message
@@ -649,7 +643,7 @@
             break;
     }
     return upDownLeftRightItem;
-;}
+}
 
 -(CCNode *)GetComBlackWhite:(NSInteger)comNumber
 {
@@ -750,6 +744,7 @@
         CCNode* winLoseNode;
         if (first == @"1") {
             winLoseNode = [self showWhoisFirst:@"You Win"];
+            //[[SimpleAudioEngine sharedEngine] playEffect:@"youwin.m4a"];
             NSInteger myWin = [getFirst GetBlackWhiteWinNumber] + 1;
             [getFirst SetBlackWhiteWinNumber:myWin];
             totalWin += 1;
@@ -757,6 +752,7 @@
         }
         else{  
             winLoseNode = [self showWhoisFirst:@"You Lose"];
+            //[[SimpleAudioEngine sharedEngine] playEffect:@"youlose.m4a"];
             NSInteger myLose = [getFirst GetBlackWhiteLoseNumber] + 1;
             [getFirst SetBlackWhiteLoseNumber:myLose];
             totalLose += 1;
@@ -779,9 +775,7 @@
 
         
         [self addChild:winLoseNode z:14 tag:14];
-        
-        NSLog(@"myWin = %d", [getFirst GetBlackWhiteWinNumber]);
-        NSLog(@"myLose = %d", [getFirst GetBlackWhiteLoseNumber]);
+       
         if ([self getChildByTag:20] != nil)
         {
             [self removeChildByTag:20 cleanup:YES];
@@ -804,6 +798,7 @@
         [winLoseNode runAction:[CCSequence actions:[CCHide action],[CCDelayTime actionWithDuration:1],
                                 [CCCallFunc actionWithTarget:self selector:@selector(cleanDialogAndupdownItem)],
                                 [CCDelayTime actionWithDuration:1],[CCShow action],
+                                [CCCallFuncND actionWithTarget:self selector:@selector(playMyEffect:data:) data:(void *)first],
                                 [CCJumpTo actionWithDuration:0.5 position:winLoseNode.position height:100 jumps:1],
                                 [CCDelayTime actionWithDuration:1],[CCHide action],
                                 [CCCallFuncND actionWithTarget:self selector:@selector(goRoundGirl:data:)data:(void *)myRound],
@@ -814,6 +809,7 @@
         [winLoseNode runAction:[CCSequence actions:[CCHide action],[CCDelayTime actionWithDuration:1],
                                 [CCCallFunc actionWithTarget:self selector:@selector(cleanDialogAndupdownItem)],
                                 [CCDelayTime actionWithDuration:1],[CCShow action],
+                                [CCCallFuncND actionWithTarget:self selector:@selector(playMyEffect:data:) data:(void *)first],
                                 [CCJumpTo actionWithDuration:0.5 position:winLoseNode.position height:100 jumps:1],
                                 [CCDelayTime actionWithDuration:1],[CCHide action],
                                 [CCCallFunc actionWithTarget:self selector:@selector(blackWhiteGameEnd)],
@@ -847,6 +843,23 @@
     }
 
 }
+
+-(void)playMyEffect:(id)sender data:(NSString*)first
+{
+
+    if (first == @"1")
+        [[SimpleAudioEngine sharedEngine] playEffect:@"youwin.m4a"];
+    else
+        [[SimpleAudioEngine sharedEngine] playEffect:@"youlose.m4a"];
+    save_ChickenData* getData = [[save_ChickenData alloc] init];
+    if ([getData GetSoundIsMute])
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+    else
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:3.0f];
+
+}
+
+
 //遊戲結束
 -(void)blackWhiteGameEnd
 {
