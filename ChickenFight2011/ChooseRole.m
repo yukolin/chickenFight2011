@@ -172,7 +172,7 @@
     if (CGRectContainsPoint(rectP1, location)) {
         [saveChickenNameClass MarkTheChickenNumber:@"1"];
         [[SimpleAudioEngine sharedEngine] playEffect:@"selChicken.m4a"]; 
-        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.1f];
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.2f];
         if ([saveChickenNameClass GetSoundIsMute]) {
             [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
         }
@@ -194,7 +194,7 @@
    
     if (CGRectContainsPoint(rectP2, location)) {
         [[SimpleAudioEngine sharedEngine] playEffect:@"selChicken.m4a"]; 
-        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.1f];
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.2f];
         if ([saveChickenNameClass GetSoundIsMute]) {
             [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
         }
@@ -218,7 +218,7 @@
     
     if (CGRectContainsPoint(rectP3, location)) {
         [[SimpleAudioEngine sharedEngine] playEffect:@"selChicken.m4a"]; 
-        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.1f];
+        [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.2f];
         if ([saveChickenNameClass GetSoundIsMute]) {
             [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
         }

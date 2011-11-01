@@ -10,6 +10,15 @@
 
 @implementation save_ChickenData
 
+-(void)SetNowYaw:(float)yaw
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:yaw forKey:@"nowYaw"];
+}
+-(float)GetNowYaw
+{
+    return [[NSUserDefaults standardUserDefaults] floatForKey:@"nowYaw"];
+}
+
 -(void)SetMusicIsMute:(BOOL)isMute
 {
     NSString* const musicIsMute = @"IsMusicMute";

@@ -33,6 +33,8 @@
         save_ChickenData* getData = [[save_ChickenData alloc] init];
         if ([getData GetSoundIsMute])
             [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
+        else
+            [[SimpleAudioEngine sharedEngine] setEffectsVolume:1.0f];
             
         //self.isAccelerometerEnabled = YES;
         self.isTouchEnabled=YES;

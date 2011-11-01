@@ -19,7 +19,13 @@
     CCSprite *copy_chicken;
     CCSprite *user_chicken;
     NSNumber *coundDownSoundId;
+    float before_yaw;
+    float before_pitch;
+    int i;
 }
+@property (nonatomic, readwrite) float nowYaw;
+@property (nonatomic, readwrite) float nowPitch;
+
 @property (nonatomic, retain) CMMotionManager *motionManager;
 
 +(id)Scene;
@@ -39,5 +45,6 @@
 -(void)rightItemTouched;
 -(void)CheckNewRound:(NSInteger)way;
 -(void)cleanDialogAndupdownItem;
+-(void)rightnowCurrentAttitude;
 
 @end

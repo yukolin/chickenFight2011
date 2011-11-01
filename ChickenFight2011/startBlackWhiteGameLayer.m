@@ -24,6 +24,8 @@
 
 @synthesize motionManager;
 
+@synthesize nowYaw, nowPitch;
+
 @class save_ChickenData;
 
 +(id) Scene
@@ -56,7 +58,7 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
         //[SimpleAudioEngine sharedEngine].mute = YES;
-        
+        i = 0;
         size = [self getMyWinSize];
         CCNode *comNode = [myChickens com_node];
         CCNode *userNode = [myChickens user_node];
@@ -183,7 +185,7 @@
     
     //[self runAction:[CCDelayTime actionWithDuration:2.0f]];
     coundDownSoundId = (NSNumber*)[[SimpleAudioEngine sharedEngine] playEffect:@"chicken2.m4a"];
-    [[SimpleAudioEngine sharedEngine] setEffectsVolume:1.0f];
+    [[SimpleAudioEngine sharedEngine] setEffectsVolume:2.0f];
     save_ChickenData* getData = [[save_ChickenData alloc] init];
     if ([getData GetSoundIsMute])
         [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
@@ -507,7 +509,7 @@
     [self showUserName];
     //[self runAction:[CCDelayTime actionWithDuration:2.0f]];
     coundDownSoundId = (NSNumber*)[[SimpleAudioEngine sharedEngine] playEffect:@"chicken-chicken5.m4a"];
-    [[SimpleAudioEngine sharedEngine] setEffectsVolume:1.0f];
+    [[SimpleAudioEngine sharedEngine] setEffectsVolume:2.0f];
     save_ChickenData* getData = [[save_ChickenData alloc] init];
     if ([getData GetSoundIsMute])
         [[SimpleAudioEngine sharedEngine] setEffectsVolume:0.0f];
@@ -567,36 +569,44 @@
     if (motionManager.isDeviceMotionAvailable) {
         [motionManager startDeviceMotionUpdates];
     }
-    
+    i = 0;
+    //[self rightnowCurrentAttitude];
     [self scheduleUpdate]; 
 }
 
 -(void)update:(ccTime)delta {
+    i++;
+    //save_ChickenData* getData = [[save_ChickenData alloc] init];
     CMDeviceMotion *currentDeviceMotion = motionManager.deviceMotion;
     CMAttitude *currentAttitude = currentDeviceMotion.attitude;
     
+    if (i <= 2)
+    {
+        before_yaw = roundf((float)(CC_RADIANS_TO_DEGREES(currentAttitude.yaw)));
+        before_pitch = roundf((float)(CC_RADIANS_TO_DEGREES(currentAttitude.pitch)));
+    }
     // 1: Convert the radians yaw value to degrees then round up/down
     float yaw = roundf((float)(CC_RADIANS_TO_DEGREES(currentAttitude.yaw)));
     float pitch = roundf((float)(CC_RADIANS_TO_DEGREES(currentAttitude.pitch)));
     //float roll = roundf((float)(CC_RADIANS_TO_DEGREES(currentAttitude.roll)));
     
-    if (pitch >= 60) //上
+    if (pitch - before_pitch >= 30) //上
     {
         [self upItemTouched];
     }
-    else if (pitch <= -30) //下
+    else if (pitch - before_pitch <= -30) //下
     {
         //[motionManager stopDeviceMotionUpdates];
         [self downItemTouched];
     }
     else
     {
-        if (yaw >= 40)  //左
+        if ((yaw - before_yaw) >= 30)  //左
         {
             //[motionManager stopDeviceMotionUpdates];
             [self leftItemTouched];
         }
-        else if (yaw <= -40)  //右
+        else if ((yaw - before_yaw) <= -30)  //右
         {
             //[motionManager stopDeviceMotionUpdates];
             [self rightItemTouched];
@@ -676,7 +686,7 @@
 
     self.isTouchEnabled = NO;
     [self unscheduleUpdate];
-self.motionManager = [[CMMotionManager alloc] init];
+//self.motionManager = [[CMMotionManager alloc] init];
    CCMenu * menu = (CCMenu *)[self getChildByTag:4];
     menu.isTouchEnabled = NO;
         save_ChickenData* getFirst = [[save_ChickenData alloc] init];

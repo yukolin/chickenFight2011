@@ -66,4 +66,7 @@
 -(void)SetSoundIsMute:(BOOL)isMute;
 -(BOOL)GetSoundIsMute;
 
+-(void)SetNowYaw:(float)yaw;
+-(float)GetNowYaw;
+
 @end
